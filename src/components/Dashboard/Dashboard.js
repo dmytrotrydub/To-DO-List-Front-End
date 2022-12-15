@@ -11,8 +11,6 @@ const Dashboard = () => {
   const [taskInputForm, setTaskInputForm] = useState(false);
 
   const handleItemData = (e) => {
-
-
     postTaskIntoDB(newItem);
     setNewItem(newItemData);
   };
@@ -39,11 +37,11 @@ const Dashboard = () => {
     const toDoData = axios.get(`${process.env.REACT_APP_SERVER}${process.env.REACT_APP_PORT}/`);
 
     toDoData
-        .then((response) => {
-            console.log(response.data);
-          const sortedData = response.data.sort((date)=>date)
-          setListOfItems(response.data);
-          console.log(response.data);
+      .then((response) => {
+        console.log(response.data);
+
+        setListOfItems(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(`Invalid data received : ${error}`);
