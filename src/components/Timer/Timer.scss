@@ -1,0 +1,10 @@
+.tmr-dsply{
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+
+
+    &__value{
+        padding:0 0.5rem;
+    }
+}
