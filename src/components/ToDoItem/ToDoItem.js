@@ -1,9 +1,15 @@
-
+import './ToDoItem.scss';
+import Timer from '../Timer/Timer';
 
 const ToDoItem = (props) => {
-    return (<div>
-        <p>{props.description}</p>
-    </div>);
+
+
+  return (
+    <div className='tdi-wrapper'>
+      <p className ='tdi-descr'>{props.description}</p>
+      <Timer timerData={props.timerStart} />
+    </div>
+  );
 };
 
 export default ToDoItem;
