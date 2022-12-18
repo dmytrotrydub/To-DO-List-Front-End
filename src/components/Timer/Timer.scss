@@ -1,10 +1,15 @@
-.tmr-dsply{
+.tmr-dsply {
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+  &__timeWrapper {
+    padding: 0 0.5rem;
     display: flex;
     flex-direction: row;
-    justify-content:flex-start;
+    justify-content: flex-start;
 
-
-    &__value{
-        padding:0 0.5rem;
+    &__value {
+      padding: 0 0.5rem;
     }
+  }
 }

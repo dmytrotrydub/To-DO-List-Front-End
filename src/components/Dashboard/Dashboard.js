@@ -1,20 +1,20 @@
 import ToDoItem from '../ToDoItem/ToDoItem';
 import axios from 'axios';
-
 import { useEffect, useState } from 'react';
 
 const Dashboard = () => {
   const [listOfItems, setListOfItems] = useState([]);
-  const [newItem, setNewItem] = useState(null);
+  const [updateList, setUpdateList] = useState(false);
   const [newItemData, setNewItemData] = useState({ Description: null });
 
   const [taskInputForm, setTaskInputForm] = useState(false);
 
   const handleItemData = (e) => {
-    postTaskIntoDB(newItem);
-    setNewItem(newItemData);
+    e.preventDefault();
+
+    postTaskIntoDB(newItemData);
   };
-  const postTaskIntoDB = (item) => {
+  const postTaskIntoDB = () => {
     const header = {
       'Content-Type': 'text',
       charset: 'utf-8',
@@ -28,7 +28,24 @@ const Dashboard = () => {
 
     postData
       .then((response) => {
-        console.log(response.data);
+        setUpdateList(!updateList);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const deleteTask = (e, itemToDelete) => {
+    e.preventDefault();
+    
+    console.log(itemToDelete);
+
+    const deleteItem = axios.delete(
+      `${process.env.REACT_APP_SERVER}${process.env.REACT_APP_PORT}/`,
+      { data: itemToDelete }
+    );
+    deleteItem
+      .then((response) => {
+        console.log(response);
+        setUpdateList(!updateList);
       })
       .catch((err) => console.log(err));
   };
@@ -39,14 +56,12 @@ const Dashboard = () => {
     toDoData
       .then((response) => {
         console.log(response.data);
-
         setListOfItems(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(`Invalid data received : ${error}`);
       });
-  }, [newItem]);
+  }, [updateList]);
 
   return (
     <div>
@@ -55,10 +70,11 @@ const Dashboard = () => {
         onClick={(e) => {
           setTaskInputForm(true);
         }}
-        children={'ADD TASK'}
-      />
+      >
+        ADD TASK
+      </button>
       {taskInputForm === true ? (
-        <form onSubmit={(e) => handleItemData(e)}>
+        <form onSubmit={handleItemData}>
           <label htmlFor='task-input-form'>ENTER TASK TO TRACK</label>
           <input
             type='text'
@@ -77,6 +93,7 @@ const Dashboard = () => {
             description={item.Description}
             dateUpdated={item.dateUpdated}
             timerStart={item.timerStart}
+            deleteTask={deleteTask}
           />
         );
       })}

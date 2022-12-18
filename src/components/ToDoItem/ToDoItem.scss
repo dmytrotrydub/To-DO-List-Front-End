@@ -1,5 +1,9 @@
-.tdi-wrapper{
+.tdi-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  &__tmr-wrapper {
     display: flex;
-    flex-direction: row;
-    justify-content:space-between
+  }
 }
